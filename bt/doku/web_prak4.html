@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="praktikum-3-termin-4-webanwendung-bug-tracker">Praktikum 3, Termin 4, Webanwendung &quot;Bug-Tracker&quot;</h1>
+<p><strong>Gruppe C</strong> &gt;Thomas, Nowicki, 1043815 &gt;Elbers, Lennart, 1005523 &gt;Voß, Dustin, 969942</p>
+<p><strong>05.01.2017</strong></p>
+<hr />
+<p>[TOC]</p>
+<h2 id="einleitung">1. Einleitung</h2>
+<blockquote>
+<p>&quot;Bug-Tracker&quot; sind ein Hilfsmittel bei der Qualitätssicherung von Software-Entwicklungsprojekten: erkannte Mängel werden proto- kolliert und weitere Bearbeitungsvorgänge zur Beseitigung der Mängel angestoßen. Durch hinterlegte Datensätze werden die Projekt, Fehler, Kategorien sowie Komponenten hinterlegt und durch spezielle Auswertungsseiten benutzerfreundlicher angezeigt. Es ist eine Singlepageapplikation, die tabellarisch Informationen anzeigt und dynamisch mit AJAX nachlädt</p>
+</blockquote>
+<h2 id="implementierung-des-servers">2. Implementierung des Servers</h2>
+<h2 id="rest-interface">------2.1 REST-Interface</h2>
+<blockquote>
+<p><strong>Anforderungen an den Server nach REST-Prinzip:</strong></p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Löst verschiedene Klassen nach Objekt-Dispatching auf und ruft die jeweiligen Funktion auf und gibt die Daten nach GET POST PUT DELETE auf.</p>
+</blockquote>
+</blockquote>
+<h2 id="module">------2.2 Module</h2>
+<blockquote>
+<p><strong>application.py</strong> &gt; <strong>Aufgabe:</strong> &gt; &gt;Beinhaltet alle Klassen für die Webanwendung. Mit Hilfe von REST werden bei bestimmten URI-Parameter die jeweiligen GET, POST, PUT - DELETE HTTP-Methoden ausgeführt. &gt; &gt;Datenhaltung, Importierung von Datenbanken, Anpassungen sowie falsch aufgerufene Anforderungen werden darin realisiert.</p>
+<blockquote>
+<p><strong>Klassen:</strong> &gt;<strong>Projekt_cl:</strong> &gt; &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; &gt; Verwaltet Datenbestände aus den Projektdaten, innerhalb des Verzeichnisses &quot;Projekt&quot;. Dient auch als ihre Schnittstelle.</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisiert das Datenbankobjekt für die Projektdaten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Erhält die Daten aus den Projekt</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>POST(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Erstellt neue Daten für die Projekte</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>PUT(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Aktualisieren Daten für die Projekte</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, id):</strong> &gt; <strong>Aufgabe:</strong> Löscht Daten aus den Projekten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Projektkomponente_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Hilfsklasse um die Datenbanken Projekte sowie Komponenten zu verbinden!</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Erstellt Datenbankobjekte für Projekte sowie Komponenten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Mit Hilfe der Projekt-ID werden alle Daten mit den in Kompentenen zugewiesenen Projekten ausgegeben.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>ProjektfehlerAuswertung_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Hilfsklasse um die Datenbanken Projekte, Fehler und Kompentenen zu verknüpfen</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Erstellt Datenbankobjekte für Projekte, Fehler sowie Komponenten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Zunächst wird nach dem Projektnamen innerhalb der Komponenten gesucht um damit die restlichen Fehlerdaten zu extrahieren</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>ProjektKategorieAuswertung_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Hilfsklasse um die Datenbanken Fehler und Kategorie zu verknüpfen</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Erstellt Datenbankobjekte für Fehler sowie Kategorie</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Filtert mit der übergebenen Kategorien-ID die Verwendeten innerhalb der Fehlerdatenbank</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Komponenten_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Verwaltet Datenbestände aus den Komponentendaten, innerhalb des Verzeichnisses &quot;Komponenten&quot;. Dient auch als ihre Schnittstelle.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisiert das Datenbankobjekt für die Komponentendaten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Erhält die Daten aus den Komponenten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>POST(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Erstellt neue Daten für die Komponenten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>PUT(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Aktualisieren Daten für die Komponenten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, id):</strong> &gt; <strong>Aufgabe:</strong> Löscht Daten aus den Komponenten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Fehler_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Verwaltet Datenbestände aus den Fehlerdaten, innerhalb des Verzeichnisses &quot;Fehler&quot;. Dient auch als ihre Schnittstelle.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisiert das Datenbankobjekt für die Fehlerdaten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Erhält die Daten aus den Fehler</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>POST(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Erstellt neue Daten für die Fehler</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>PUT(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Aktualisieren Daten für die Fehler</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, id):</strong> &gt; <strong>Aufgabe:</strong> Löscht Daten aus den Fehler</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Mitarbeiter_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Verwaltet Datenbestände aus den Mitarbeiterdaten, innerhalb des Verzeichnisses &quot;Mitarbeiter&quot;. Dient auch als ihre Schnittstelle.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisiert das Datenbankobjekt für die Mitarbeiterdaten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Erhält die Daten aus den Mitarbeiter</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>POST(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Erstellt neue Daten für die Mitarbeiter</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>PUT(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Aktualisieren Daten für die Mitarbeiter</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, id):</strong> &gt; <strong>Aufgabe:</strong> Löscht Daten aus den Mitarbeiter</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Kategorie_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Verwaltet Datenbestände aus den Kategoriedaten, innerhalb des Verzeichnisses &quot;Kategorie&quot;. Dient auch als ihre Schnittstelle.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisiert das Datenbankobjekt für die Kategoriedaten</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, id):</strong> &gt; <strong>Aufgabe:</strong> Erhält die Daten aus den Kategorie</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>POST(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Erstellt neue Daten für die Kategorie</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>PUT(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Aktualisieren Daten für die Kategorie</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, id):</strong> &gt; <strong>Aufgabe:</strong> Löscht Daten aus den Kategorie</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Application_cl:</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Dient als Interface für die alle anderen Klassen, beinhaltet einen Handler, der den jeweiligen Klassen ihre URI's zuweist</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisierung des URI-Handlers</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self, path_spl = 'Projekt', id=None):</strong> &gt; <strong>Aufgabe:</strong> Weiterleitung an entsprechende Klassenobjekt!</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>POST(self, path_spl = 'Projekt', </strong>data_opl):<strong> &gt; </strong>Aufgabe:** Weiterleitung an entsprechende Klassenobjekt!</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>PUT(self, path_spl = 'Projekt', </strong>data_opl):<strong> &gt; </strong>Aufgabe:** Weiterleitung an entsprechende Klassenobjekt!</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, path_spl = 'Projekt', id=None):</strong> &gt; <strong>Aufgabe:</strong> Weiterleitung an entsprechende Klassenobjekt!</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>DELETE(self, path_spl = 'Projekt', id=None, </strong>kwargs):<strong> &gt; </strong>Aufgabe:** Weiterleitung der GET-Methode mit dem restlichen Keyvaluepaaren innerhalb der URI damit ?type-Anfrage realisiert werden kann</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>**default(self, *arguments, <strong>kwargs):</strong> &gt; <strong>Aufgabe:</strong> Sollte eine falsche URI verwendet werden, gibts einen ERROR 404 der an den Client gesendet wird</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>database.py:</strong> &gt; <strong>Aufgabe:</strong> &gt; &gt;Definiert das Datenbanksystem für unsere Anwendung.</p>
+<blockquote>
+<p><strong>Klassen:</strong> &gt;<strong>Database_cl:</strong> &gt; &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; &gt; Oberklasse für alle anderen Datenbankklassen unserer Anwendung</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self, type_spl):</strong> &gt; &gt; <strong>Aufgabe:</strong> Initialisierung des bestehender Datensätzen und speichert die Datensätze in ihren Verzeichnissen ab. Legt ein lokales Dictionary data_o zusätzlich an, als Arbeitskopie</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>create_px(self, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Erstellt eine neue Datei für einen neuen Datensatz, ID wird mittels maxid.dat festgehalten.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>read_px(self, id_spl = None):</strong> &gt; <strong>Aufgabe:</strong> Ließt die Defaultwerte oder selektiert Werte, wenn ID übergeben wird</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>update_px(self, id_spl, data_opl):</strong> &gt; <strong>Aufgabe:</strong> Selektiert Werte aus dem jeweiligen Datensatz mittels ID und manipuliert diese und legt sie wieder ab.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>delete_px(self, id_spl):</strong> &gt; <strong>Aufgabe:</strong> Löscht Datensatz</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Standardmethode wird mittels Vererbung angepasst</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>readData_p(self):</strong> &gt; <strong>Aufgabe:</strong> Liefert alle Daten zurück</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>nextId_p(self):</strong> &gt; <strong>Aufgabe:</strong> Ließt nächste ID aus der maxid.dat aus und erhöht dann um 1</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>ProjektDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Projekt</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Projekte erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Projekte innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>FehlerDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Fehler</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Fehler erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Fehler innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>KomponenteDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Komponente</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Komponenten erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Komponenten innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>MitarbeiterDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Mitarbeiter</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Mitarbeiter erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Mitarbeiter innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>KategorieDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Kategorie</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Kategorie erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Kategorie innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>AuswertungProjekteDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Auswertung</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Auswertung erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Auswertung innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><strong>AuswertungKategorieDatabase_cl(Database_cl):</strong> &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; Konkrete Klasse für die Datensätze aus Auswertung</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> Definiert konkrete Datenbank für Auswertung erzeugen, Übergabe beinhaltet URI</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>getDefault_px(self):</strong> &gt; <strong>Aufgabe:</strong> Definiert die Standardwerte für die Auswertung innerhalb der neu angelegten Dateien.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>navigation.py:</strong> &gt; <strong>Aufgabe:</strong> &gt; &gt;stellt Klasse Navigation_cl zur verfügung</p>
+<blockquote>
+<p><strong>Klassen:</strong> &gt;<strong>Navigation_cl(object):</strong> &gt; &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; &gt; Lädt Einträge für Navigationsbar und legt gültige URI Adressen fest.</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> keine</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self):</strong> &gt; <strong>Aufgabe:</strong> liefert Datensatz gültiger URIs und der Texte für das Asside</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>templates.py:</strong> &gt; <strong>Aufgabe:</strong> &gt; &gt;Stellt Klasse Templates_cl zur verfügung</p>
+<blockquote>
+<p><strong>Klassen:</strong> &gt;<strong>Templates_cl(object)::</strong> &gt; &gt; <strong>Aufgabe der Klasse:</strong> &gt; &gt; &gt; dynamisches sammeln von Daten fuer Templates durch übergebenen String der den Ordnerpfad der Templates enthält</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>Öffentliche Methoden:</strong> &gt; <strong>init(self):</strong> &gt; &gt; <strong>Aufgabe:</strong> keine</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>GET(self):</strong> &gt; <strong>Aufgabe:</strong> Jeder Ordner in dem übergeben Pfad wird nach Templatedateien durchsucht die zurückgegeben werden</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>Zusammenwirken der Module:</strong></p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Die Application_cl stellt Schnittstelle fuer Datenhaltung dar und liefert Daten fuer Templates. Sie dient auch als Schnittstelle für den Client</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Templates_cl liefert alle Templates aus</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Navigation_cl definiert die Navigation und die liefert die URI der Aufrufe an den Client</p>
+</blockquote>
+</blockquote>
+<h2 id="datenhaltung">------2.3 Datenhaltung</h2>
+<blockquote>
+<p><strong>Datenstrukturen und Speicherung in Dateien:</strong></p>
+</blockquote>
+<blockquote>
+<blockquote>
+<figure>
+<img src="./Datenhaltung.png" alt="Datenstruktur" /><figcaption>Datenstruktur</figcaption>
+</figure>
+</blockquote>
+</blockquote>
+<h2 id="implementierung-des-clients">3. Implementierung des Clients</h2>
+<h2 id="klassen">------3.1 Klassen</h2>
+<blockquote>
+<p><strong>app.js:</strong> &gt; <strong>Application_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;Kreiert die URI und stellt den Verzeichnispfad sowie den Datebank identifiert sowie den ApplicationVerifier für die REST Methoden bereit</p>
+<p><strong>detail.js:</strong> &gt; <strong>DetailView_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;Stellt PUT POST GET Methoden zur verfügung</p>
+<blockquote>
+<p><strong>SourceDetailView_cl:</strong> &gt; <strong>Aufgabe:</strong> &gt; &gt;Unterklasse von DetailView_cl überschreibt checkContent_p Methode</p>
+</blockquote>
+<p><strong>list.js:</strong> &gt; <strong>ListView_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;definiert die Data-Aktionen die ausgeführt werden sollen. Stellt DELETE methode bereit. leichtes Benutzerhandling</p>
+<p><strong>nav.js:</strong> &gt; <strong>Nav_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;Navigationsbereich wird zur Verfügung gestellt</p>
+<p><strong>es.js:</strong> &gt; <strong>EventService_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;siehe 3.2</p>
+<p><strong>te.js:</strong> &gt; <strong>Generator_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;erzeugt Templates</p>
+<blockquote>
+<p><strong>TemplateCompiler_cl:</strong> &gt; <strong>Aufgabe:</strong> &gt; &gt;generiert Templates</p>
+</blockquote>
+<p><strong>tm.js:</strong> &gt; <strong>TemplateManager_cl:</strong> &gt; &gt; <strong>Aufgabe:</strong> &gt; &gt; &gt;verwaltet Templates</p>
+<p><strong>Zusammenwirken der Instanzen der Klassen:</strong></p>
+<blockquote>
+<p>Application_cl fuert alle Klassen über den EventService zusammen ListView_cl und DetailView_cl verwenden die TemplateEngine um die Listen und Detail-Views zu generieren</p>
+</blockquote>
+</blockquote>
+<h2 id="eventservice">------3.2 Eventservice</h2>
+<blockquote>
+<p><strong>Einsatz des Eventservice:</strong> &gt;Siehe Aufgabenstellung oder unten</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Subscriber melden sich fuer Nachrichten an. Mittels publish_px wird ein Nachricht in einen Nachrichtenbuffer mit Prioritätsabfrage gelegt Die einzelnen Subscriber werden mittels der notify_px Schnittstelle informiert</p>
+</blockquote>
+</blockquote>
+<h2 id="templateverarbeitung">------3.3 Templateverarbeitung</h2>
+<blockquote>
+<p><strong>Verwendete Templates:</strong> &gt;- AuswertungKategorielist.tpl &gt;- AuswertungKategorieTable.tpl &gt;- AuswertungProjektelist.tpl &gt;- AuswertungProjekteTable.tpl &gt;- Fehlerdetail.tpl &gt;- Fehlerlist.tpl &gt;- Kategoriedetail.tpl &gt;- Kategorielist.tpl &gt;- Komponentendetail.tpl &gt;- Komponentenlist.tpl &gt;- Mitarbeiterdetail.tpl &gt;- Mitarbeiterlist.tpl &gt;- nav.tpl &gt;- Projektdetail.tpl &gt;- Projektkomponentelist.tpl &gt;- Projektlist.tpl</p>
+</blockquote>
+<h2 id="prüfung-markup-und-stilregeln">4. Prüfung Markup und Stilregeln</h2>
+<blockquote>
+<p><strong>Überprüfung des generierten Markups und der CSS-Stilregeln:</strong> &gt; Hier stehen Notizen zur Überprüfung des generierten Markups un der CSS-Stilregeln! &gt; <img src="./test1P4.png" alt="test1" /> &gt; <img src="./test2P4.png" alt="test2" /> &gt; <img src="./test3P4.png" alt="test3" /> &gt; <img src="./test4P4.png" alt="test4" /> &gt; <img src="./testcss.png" alt="testcss" /> &gt; &gt;</p>
+</blockquote>
+</body>
+</html>
