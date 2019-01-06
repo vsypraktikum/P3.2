@@ -14,9 +14,15 @@
       <label for="beschreibung_s">Beschreibung <span class="clRequired"></span></label>
       <input type="text" value="#context.data.beschreibung#" id="beschreibung_s" name="beschreibung_s" required />
    </div>
-   <div class="clFormRow">
+   <div class="clFormRow" id="selecter">
       <label for="projekt_s">Projekt <span class="clRequired"></span></label>
-      <input type="text" value="#context.data.projekt#" id="projekt_s" name="projekt_s" required />
+         @var rows_pro = context['data_projekt'];@
+         <select id="projekt_s" name="projekt_s">
+            @for var key_pro in rows_pro@
+                  @var row_pro = rows_pro[key_pro];@
+                  <option value="#row_pro['name']#">#row_pro['name']# </option>
+            @endfor@
+         </select>
    </div>
    </div>
    <div id="idButtonArea" class="clButtonArea">

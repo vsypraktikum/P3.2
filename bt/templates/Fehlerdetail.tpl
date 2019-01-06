@@ -9,7 +9,6 @@
 	<div class="clFormRow" id="selecter">
          <label for="komponenten_s">Komponente <span class="clRequired"></span></label>
          @var rows_komponente = context['data_komponente'];@
-         @console.log(context['abteilung']);@
          <select id="komponente_s" name="komponente_s">
             @for var key_ko in rows_komponente@
                   @var row_komponente = rows_komponente[key_ko];@

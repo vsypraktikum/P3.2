@@ -37,7 +37,7 @@ class Database_cl(object):
       # Überprüfung der Datenn müsste ergänzt werden!
       id_s = self.nextId_p()
       # Datei erzeugen
-      file_o = codecs.open(os.path.join(self.path_s , id_s+'.dat'), 'w', 'utf-8')
+      file_o = codecs.open(os.path.join(self.path_s , id_s+'.json'), 'w', 'utf-8')
       file_o.write(json.dumps(data_opl, indent=3, ensure_ascii=True))
       file_o.close()
 
@@ -68,7 +68,7 @@ class Database_cl(object):
       status_b = False
       if id_spl in self.data_o:
          # Datei aktualisieren
-         file_o = codecs.open(os.path.join(self.path_s, id_spl+'.dat'), 'w', 'utf-8')
+         file_o = codecs.open(os.path.join(self.path_s, id_spl+'.json'), 'w', 'utf-8')
          file_o.write(json.dumps(data_opl, indent=3, ensure_ascii=True))
          file_o.close()
 
@@ -83,7 +83,7 @@ class Database_cl(object):
       status_b = False
       if id_spl in self.data_o:
          # Datei entfernen
-         os.remove(os.path.join(self.path_s, id_spl+'.dat'))
+         os.remove(os.path.join(self.path_s, id_spl+'.json'))
 
          del self.data_o[id_spl]
          status_b = True
@@ -102,7 +102,7 @@ class Database_cl(object):
 
       files_a = os.listdir(self.path_s)
       for fileName_s in files_a:
-         if fileName_s.endswith('.dat') and fileName_s != 'maxid.dat':
+         if fileName_s.endswith('.json') and fileName_s != 'maxid.json':
             file_o = codecs.open(os.path.join(self.path_s, fileName_s), 'rU', 'utf-8')
             content_s = file_o.read()
             file_o.close()
@@ -112,7 +112,7 @@ class Database_cl(object):
    #-------------------------------------------------------
    def nextId_p(self):
    #-------------------------------------------------------
-      file_o = open(os.path.join(self.path_s, 'maxid.dat'), 'r+')
+      file_o = open(os.path.join(self.path_s, 'maxid.json'), 'r+')
       maxId_s = file_o.read()
       maxId_s = str(int(maxId_s)+1)
       file_o.seek(0)

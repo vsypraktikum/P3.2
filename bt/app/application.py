@@ -270,12 +270,23 @@ class Komponenten_cl(object):
         self.db_proj = ProjektDatabase_cl()
 
     # -------------------------------------------------------
-    def GET(self, id):
+    def GET(self, id, **kwargs):
         # -------------------------------------------------------
         retVal_o = {
             'data': None,
             'data_projekt': None
         }
+
+        if kwargs != {}:
+          type = kwargs['type']
+          data_o = self.db_o.read_px(id)
+
+          data_tmp = {}
+          for key_s in data_o:
+              if data_o[key_s]['fehlerstatus'] == type:
+                  data_tmp[key_s] = data_o[key_s]
+          retVal_o['data'] = data_tmp
+
 
         if id == None:
             # Anforderung der Liste
@@ -283,8 +294,8 @@ class Komponenten_cl(object):
             retVal_o['data_projekt'] = self.db_proj.read_px()
         else:
             # Anforderung eines Dokuments
-            data_o = self.db_o.read_px(id)
-            data_proj = self.db_proj.read_px(id)
+            data_o = self.db_o.read_px()
+            data_proj = self.db_proj.read_px()
             if data_o != None:
                 retVal_o['data'] = adjustId_p(id, data_o)
             if data_proj != None:
